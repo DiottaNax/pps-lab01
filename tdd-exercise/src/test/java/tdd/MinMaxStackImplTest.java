@@ -55,4 +55,13 @@ class MinMaxStackImplTest {
     public void shouldThrowErrorWhenPeekingIntoAnEmptyStack() {
         assertThrows(IllegalStateException.class, this.stack::peek);
     }
+
+    @Test
+    public void shouldAlwaysPeekTheSameElement() {
+        this.shouldPushElements();
+        final int sizeBeforePeek = this.stack.size();
+        final int firstPeekedElement = this.stack.peek();
+        assertEquals(sizeBeforePeek, this.stack.size());
+        assertEquals(firstPeekedElement, this.stack.peek());
+    }
 }
