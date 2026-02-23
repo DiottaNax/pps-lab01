@@ -15,17 +15,22 @@ public class MinMaxStackImpl implements MinMaxStack {
         this.stack.addLast(value);
     }
 
+    private void verifyStackNonEmpty() {
+        if (this.stack.isEmpty()) {
+            throw new IllegalStateException("The stack is empty!");
+        }
+    }
+
     @Override
     public int pop() {
-        if(this.stack.isEmpty()) {
-            throw  new IllegalStateException("The stack is empty!");
-        }
+        this.verifyStackNonEmpty();
         return this.stack.removeLast();
     }
 
     @Override
     public int peek() {
-        return 0;
+        this.verifyStackNonEmpty();
+        return this.stack.getLast();
     }
 
     @Override

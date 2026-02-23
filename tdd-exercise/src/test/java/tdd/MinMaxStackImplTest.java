@@ -50,4 +50,9 @@ class MinMaxStackImplTest {
         assertEquals(numElements, actual.size());
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void shouldThrowErrorWhenPeekingIntoAnEmptyStack() {
+        assertThrows(IllegalStateException.class, this.stack::peek);
+    }
 }
