@@ -40,4 +40,14 @@ class MinMaxStackImplTest {
     public void shouldThrowErrorWhenPoppingFromEmptyStack() {
         assertThrows(IllegalStateException.class, this.stack::pop);
     }
+
+    @Test
+    public void shouldPopElementsInLIFOOrder() {
+        final int numElements = 10;
+        final var addedElements = this.addRandomElements(numElements);
+        final var expected = addedElements.reversed();
+        final var actual = IntStream.range(0, numElements).mapToObj(i -> this.stack.pop()).toList();
+        assertEquals(numElements, actual.size());
+        assertEquals(expected, actual);
+    }
 }
