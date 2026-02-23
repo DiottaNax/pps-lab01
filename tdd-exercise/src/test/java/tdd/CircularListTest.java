@@ -3,7 +3,9 @@ package tdd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,10 +41,26 @@ public class CircularListTest {
         assertFalse(this.queue.isEmpty());
     }
 
+    private List<Integer> addRandomElements(final int numElements) {
+        final var elements = IntStream.range(0, numElements)
+                .mapToObj(i -> this.random.nextInt())
+                .collect(Collectors.toList());
+        elements.forEach(this.queue::push);
+        return elements;
+    }
+
     @Test
     public void shouldNotAddMoreThanMaxSizeElements() {
         final int numElements = this.maxSize + 1;
-        IntStream.range(0, numElements).forEach(this.queue::push);
+        addRandomElements(numElements);
         assertEquals(maxSize, this.queue.size());
+    }
+
+    @Test
+    public void shouldOverrideOldestElements() {
+        final int numElements = 10;
+        final var generatedElements = this.addRandomElements(numElements);
+        final var expectedElements = generatedElements.subList(numElements - maxSize, numElements);
+        assertEquals(expectedElements, this.queue.values());
     }
 }

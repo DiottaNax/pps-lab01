@@ -23,7 +23,7 @@ public class CircularQueueImpl implements CircularQueue {
 
     @Override
     public void push(int element) {
-        if(this.size() == maxSize) {
+        if (this.size() == maxSize) {
             this.queue.removeFirst();
         }
         this.queue.addLast(element);
@@ -32,5 +32,10 @@ public class CircularQueueImpl implements CircularQueue {
     @Override
     public int size() {
         return this.queue.size();
+    }
+
+    @Override
+    public List<Integer> values() {
+        return List.copyOf(this.queue);
     }
 }

@@ -1,5 +1,7 @@
 package tdd;
 
+import java.util.List;
+
 /**
  * Task 3 - TDD for Circular Queue
  * A simple CircularQueue that stores integers with a **fixed** capacity.
@@ -19,4 +21,6 @@ public interface CircularQueue {
     void push(int element);
 
     int size();
+
+    List<Integer> values();
 }
