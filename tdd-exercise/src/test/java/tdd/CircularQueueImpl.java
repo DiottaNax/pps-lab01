@@ -20,4 +20,9 @@ public class CircularQueueImpl implements CircularQueue {
     public boolean isEmpty() {
         return this.queue.isEmpty();
     }
+
+    @Override
+    public void push(int element) {
+        this.queue.addLast(element);
+    }
 }
