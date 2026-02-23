@@ -59,8 +59,18 @@ public class CircularListTest {
     @Test
     public void shouldOverrideOldestElements() {
         final int numElements = 10;
-        final var generatedElements = this.addRandomElements(numElements);
-        final var expectedElements = generatedElements.subList(numElements - maxSize, numElements);
+        final var addedElements = this.addRandomElements(numElements);
+        final var expectedElements = addedElements.subList(numElements - maxSize, numElements);
         assertEquals(expectedElements, this.queue.values());
+    }
+
+    @Test
+    public void shouldPopElementsInFIFOOrder() {
+        final int numElements = 3;
+        final var expected = this.addRandomElements(numElements);
+        final var actual = IntStream.range(0, numElements)
+                .mapToObj(i -> this.queue.pop())
+                .collect(Collectors.toList());
+        assertEquals(expected, actual);
     }
 }

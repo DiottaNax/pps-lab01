@@ -23,4 +23,6 @@ public interface CircularQueue {
     int size();
 
     List<Integer> values();
+
+    int pop();
 }

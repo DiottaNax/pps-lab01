@@ -38,4 +38,9 @@ public class CircularQueueImpl implements CircularQueue {
     public List<Integer> values() {
         return List.copyOf(this.queue);
     }
+
+    @Override
+    public int pop() {
+        return this.queue.removeFirst();
+    }
 }
