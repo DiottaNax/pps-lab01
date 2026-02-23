@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -72,5 +73,10 @@ public class CircularListTest {
                 .mapToObj(i -> this.queue.pop())
                 .collect(Collectors.toList());
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldThrowErrorWhenPoppingFromEmptyQueue() {
+        assertThrows(NoSuchElementException.class, this.queue::pop);
     }
 }
