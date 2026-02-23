@@ -17,7 +17,10 @@ public class MinMaxStackImpl implements MinMaxStack {
 
     @Override
     public int pop() {
-        return 0;
+        if(this.stack.isEmpty()) {
+            throw  new IllegalStateException("The stack is empty!");
+        }
+        return this.stack.removeLast();
     }
 
     @Override

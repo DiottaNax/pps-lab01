@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MinMaxStackImplTest {
     private final Random random = new Random();
@@ -35,5 +34,10 @@ class MinMaxStackImplTest {
         final int numElements = 10;
         this.addRandomElements(numElements);
         assertEquals(numElements, this.stack.size());
+    }
+
+    @Test
+    public void shouldThrowErrorWhenPoppingFromEmptyStack() {
+        assertThrows(IllegalStateException.class, this.stack::pop);
     }
 }
