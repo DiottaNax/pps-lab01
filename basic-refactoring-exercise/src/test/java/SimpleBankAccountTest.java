@@ -19,6 +19,8 @@ class SimpleBankAccountTest {
         bankAccount = new SimpleBankAccount(accountHolder, 0);
     }
 
+
+
     @Test
     void testInitialBalance() {
         assertEquals(0, bankAccount.getBalance());

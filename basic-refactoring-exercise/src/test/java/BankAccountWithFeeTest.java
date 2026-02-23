@@ -17,12 +17,20 @@ public class BankAccountWithFeeTest {
     }
 
     @Test
-    void testWithdrawWithFee() {
+    void shouldApplyFeeToWithdraws() {
         final int depositAmount = 100;
         final int withdrawAmount = 70;
         final double expectedBalance = depositAmount - withdrawAmount - BankAccountWithFee.getWithdrawFee();
         bankAccount.deposit(accountHolder.id(), depositAmount);
         bankAccount.withdraw(accountHolder.id(), withdrawAmount);
         assertEquals(expectedBalance, bankAccount.getBalance());
+    }
+
+    @Test
+    void shouldNotConsentWithdrawsWithoutEnoughBalance() {
+        final int depositAmount = 100;
+        bankAccount.deposit(accountHolder.id(), depositAmount);
+        bankAccount.withdraw(accountHolder.id(), depositAmount);
+        assertEquals(depositAmount, bankAccount.getBalance());
     }
 }
