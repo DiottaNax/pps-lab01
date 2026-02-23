@@ -94,4 +94,11 @@ class MinMaxStackImplTest {
         this.addRandomElements(stackWithManyElements, manyElements);
         compareBenchmarks(this.stack::getMin, stackWithManyElements::getMin, toleranceMillis);
     }
+
+    @Test
+    public void shouldReturnMax() {
+        final int numElements = 10;
+        final var addedElements = this.addRandomElements(this.stack, numElements);
+        assertEquals(Collections.max(addedElements), this.stack.getMax());
+    }
 }

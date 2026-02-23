@@ -47,7 +47,7 @@ public class MinMaxStackImpl implements MinMaxStack {
 
     @Override
     public int getMax() {
-        return 0;
+        return this.sortedElements.getLast();
     }
 
     @Override
