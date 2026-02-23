@@ -17,4 +17,6 @@ public interface CircularQueue {
     boolean isEmpty();
 
     void push(int element);
+
+    int size();
 }

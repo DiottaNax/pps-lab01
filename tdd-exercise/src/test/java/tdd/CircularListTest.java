@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
     private final int maxSize = 3;
+    private final Random random = new Random();
     private CircularQueue queue;
-    private Random random = new Random();
 
     @BeforeEach
     public void init() {
@@ -36,5 +37,12 @@ public class CircularListTest {
         final int element = random.nextInt();
         this.queue.push(element);
         assertFalse(this.queue.isEmpty());
+    }
+
+    @Test
+    public void shouldNotAddMoreThanMaxSizeElements() {
+        final int numElements = this.maxSize + 1;
+        IntStream.range(0, numElements).forEach(this.queue::push);
+        assertEquals(maxSize, this.queue.size());
     }
 }
