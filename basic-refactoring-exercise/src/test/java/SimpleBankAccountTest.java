@@ -10,8 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * The test suite for testing the SimpleBankAccount implementation
  */
 class SimpleBankAccountTest {
-    private static final double WITHDRAW__FEE = 1;
-
     private AccountHolder accountHolder;
     private BankAccount bankAccount;
 
@@ -47,10 +45,9 @@ class SimpleBankAccountTest {
     void testWithdraw() {
         final int depositAmount = 100;
         final int withdrawAmount = 70;
-        final double expectedBalanceAfterWithdraw = depositAmount - withdrawAmount - WITHDRAW__FEE;
         bankAccount.deposit(accountHolder.id(), depositAmount);
         bankAccount.withdraw(accountHolder.id(), withdrawAmount);
-        assertEquals(expectedBalanceAfterWithdraw, bankAccount.getBalance());
+        assertEquals(depositAmount - withdrawAmount, bankAccount.getBalance());
     }
 
     @Test
