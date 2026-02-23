@@ -1,9 +1,10 @@
 import example.model.AccountHolder;
 import example.model.BankAccount;
 import example.model.SimpleBankAccount;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * The test suite for testing the SimpleBankAccount implementation
@@ -15,7 +16,7 @@ class SimpleBankAccountTest {
     private BankAccount bankAccount;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         accountHolder = new AccountHolder("Mario", "Rossi");
         bankAccount = new SimpleBankAccount(accountHolder, 0);
     }
@@ -46,16 +47,17 @@ class SimpleBankAccountTest {
     void testWithdraw() {
         final int depositAmount = 100;
         final int withdrawAmount = 70;
+        final double expectedBalanceAfterWithdraw = depositAmount - withdrawAmount - WITHDRAW__FEE;
         bankAccount.deposit(accountHolder.id(), depositAmount);
         bankAccount.withdraw(accountHolder.id(), withdrawAmount);
-        assertEquals(depositAmount - withdrawAmount, bankAccount.getBalance());
+        assertEquals(expectedBalanceAfterWithdraw, bankAccount.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
         final int otherAccountId = accountHolder.id() + 1;
         final int depositAmount = 100;
-        final int  otherAccountWithdrawAmount = 70;
+        final int otherAccountWithdrawAmount = 70;
         bankAccount.deposit(accountHolder.id(), depositAmount);
         bankAccount.withdraw(otherAccountId, otherAccountWithdrawAmount);
         assertEquals(depositAmount, bankAccount.getBalance());
