@@ -3,6 +3,7 @@ package tdd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -23,16 +24,16 @@ class MinMaxStackImplTest {
         assertTrue(this.stack.isEmpty());
     }
 
-    private List<Integer> addRandomElements(final int numElements) {
+    private List<Integer> addRandomElements(final MinMaxStack stack, final int numElements) {
         final List<Integer> elements = IntStream.range(0, numElements).mapToObj(i -> random.nextInt()).toList();
-        elements.forEach(this.stack::push);
+        elements.forEach(stack::push);
         return elements;
     }
 
     @Test
     public void shouldPushElements() {
         final int numElements = 10;
-        this.addRandomElements(numElements);
+        this.addRandomElements(this.stack, numElements);
         assertEquals(numElements, this.stack.size());
     }
 
@@ -44,7 +45,7 @@ class MinMaxStackImplTest {
     @Test
     public void shouldPopElementsInLIFOOrder() {
         final int numElements = 10;
-        final var addedElements = this.addRandomElements(numElements);
+        final var addedElements = this.addRandomElements(this.stack, numElements);
         final var expected = addedElements.reversed();
         final var actual = IntStream.range(0, numElements).mapToObj(i -> this.stack.pop()).toList();
         assertEquals(numElements, actual.size());
@@ -63,5 +64,34 @@ class MinMaxStackImplTest {
         final int firstPeekedElement = this.stack.peek();
         assertEquals(sizeBeforePeek, this.stack.size());
         assertEquals(firstPeekedElement, this.stack.peek());
+    }
+
+    @Test
+    public void shouldReturnMin() {
+        final int numElements = 10;
+        final var addedElements = this.addRandomElements(this.stack, numElements);
+        assertEquals(Collections.min(addedElements), this.stack.getMin());
+    }
+
+    private void compareBenchmarks(final Runnable function, final Runnable otherFunction, final int tolerance) {
+        long start = System.currentTimeMillis();
+        function.run();
+        final long elapsedTimeFirstFunction = System.currentTimeMillis() - start;
+        start = System.currentTimeMillis();
+        otherFunction.run();
+        final long elapsedTimeSecondFunction = System.currentTimeMillis() - start;
+        final long delta = Math.abs(elapsedTimeFirstFunction - elapsedTimeSecondFunction);
+        assertTrue(delta < tolerance);
+    }
+
+    @Test
+    public void shouldRetrieveMinInConstantTime() {
+        final int toleranceMillis = 1;
+        final int fewElements = 20;
+        this.addRandomElements(this.stack, fewElements);
+        final int manyElements = 10_000;
+        final var stackWithManyElements = new MinMaxStackImpl();
+        this.addRandomElements(stackWithManyElements, manyElements);
+        compareBenchmarks(this.stack::getMin, stackWithManyElements::getMin, toleranceMillis);
     }
 }

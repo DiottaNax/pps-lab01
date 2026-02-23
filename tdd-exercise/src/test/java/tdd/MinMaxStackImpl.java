@@ -1,18 +1,23 @@
 package tdd;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MinMaxStackImpl implements MinMaxStack {
+    private final List<Integer> sortedElements;
     private final List<Integer> stack;
 
     public MinMaxStackImpl() {
         this.stack = new LinkedList<>();
+        this.sortedElements = new LinkedList<>();
     }
 
     @Override
     public void push(int value) {
         this.stack.addLast(value);
+        this.sortedElements.add(value);
+        Collections.sort(this.sortedElements);
     }
 
     private void verifyStackNonEmpty() {
@@ -24,6 +29,8 @@ public class MinMaxStackImpl implements MinMaxStack {
     @Override
     public int pop() {
         this.verifyStackNonEmpty();
+        this.sortedElements.remove(this.stack.getLast());
+        Collections.sort(this.sortedElements);
         return this.stack.removeLast();
     }
 
@@ -35,7 +42,7 @@ public class MinMaxStackImpl implements MinMaxStack {
 
     @Override
     public int getMin() {
-        return 0;
+        return this.sortedElements.getFirst();
     }
 
     @Override
