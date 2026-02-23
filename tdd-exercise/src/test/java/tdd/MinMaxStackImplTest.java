@@ -73,7 +73,7 @@ class MinMaxStackImplTest {
         assertEquals(Collections.min(addedElements), this.stack.getMin());
     }
 
-    private void compareBenchmarks(final Runnable function, final Runnable otherFunction, final int tolerance) {
+    private void verifyBenchmarkIsSimilar(final Runnable function, final Runnable otherFunction, final int tolerance) {
         long start = System.currentTimeMillis();
         function.run();
         final long elapsedTimeFirstFunction = System.currentTimeMillis() - start;
@@ -92,7 +92,7 @@ class MinMaxStackImplTest {
         final int manyElements = 10_000;
         final var stackWithManyElements = new MinMaxStackImpl();
         this.addRandomElements(stackWithManyElements, manyElements);
-        compareBenchmarks(this.stack::getMin, stackWithManyElements::getMin, toleranceMillis);
+        verifyBenchmarkIsSimilar(this.stack::getMin, stackWithManyElements::getMin, toleranceMillis);
     }
 
     @Test
@@ -100,5 +100,16 @@ class MinMaxStackImplTest {
         final int numElements = 10;
         final var addedElements = this.addRandomElements(this.stack, numElements);
         assertEquals(Collections.max(addedElements), this.stack.getMax());
+    }
+
+    @Test
+    public void shouldRetrieveMaxInConstantTime() {
+        final int toleranceMillis = 1;
+        final int fewElements = 20;
+        this.addRandomElements(this.stack, fewElements);
+        final int manyElements = 10_000;
+        final var stackWithManyElements = new MinMaxStackImpl();
+        this.addRandomElements(stackWithManyElements, manyElements);
+        verifyBenchmarkIsSimilar(this.stack::getMax, stackWithManyElements::getMax, toleranceMillis);
     }
 }
