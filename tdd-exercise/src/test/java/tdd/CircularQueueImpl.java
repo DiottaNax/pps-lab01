@@ -6,41 +6,46 @@ import java.util.List;
 public class CircularQueueImpl implements CircularQueue {
     private static final int MIN_QUEUE_SIZE = 0;
     private final int maxSize;
-    private final List<Integer> queue;
+    private final List<Integer> elements;
 
     public CircularQueueImpl(int maxSize) {
         if (maxSize <= MIN_QUEUE_SIZE) {
             throw new IllegalArgumentException("Max size should be greater than 0!");
         }
         this.maxSize = maxSize;
-        this.queue = new LinkedList<>();
+        this.elements = new LinkedList<>();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.queue.isEmpty();
+        return this.elements.isEmpty();
     }
 
     @Override
     public void push(int element) {
         if (this.size() == maxSize) {
-            this.queue.removeFirst();
+            this.elements.removeFirst();
         }
-        this.queue.addLast(element);
+        this.elements.addLast(element);
     }
 
     @Override
     public int size() {
-        return this.queue.size();
+        return this.elements.size();
     }
 
     @Override
     public List<Integer> values() {
-        return List.copyOf(this.queue);
+        return List.copyOf(this.elements);
     }
 
     @Override
     public int pop() {
-        return this.queue.removeFirst();
+        return this.elements.removeFirst();
+    }
+
+    @Override
+    public int peek() {
+        return this.elements.getFirst();
     }
 }

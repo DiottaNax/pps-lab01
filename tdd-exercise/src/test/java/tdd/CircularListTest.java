@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +44,7 @@ public class CircularListTest {
     private List<Integer> addRandomElements(final int numElements) {
         final var elements = IntStream.range(0, numElements)
                 .mapToObj(i -> this.random.nextInt())
-                .collect(Collectors.toList());
+                .toList();
         elements.forEach(this.queue::push);
         return elements;
     }
@@ -71,12 +70,21 @@ public class CircularListTest {
         final var expected = this.addRandomElements(numElements);
         final var actual = IntStream.range(0, numElements)
                 .mapToObj(i -> this.queue.pop())
-                .collect(Collectors.toList());
+                .toList();
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldThrowErrorWhenPoppingFromEmptyQueue() {
         assertThrows(NoSuchElementException.class, this.queue::pop);
+    }
+
+    @Test
+    public void shouldAlwaysPeekTheSameElement() {
+        final int numElements = maxSize + 1;
+        this.addRandomElements(numElements);
+        final int firstPeekedElement = this.queue.peek();
+        assertEquals(this.maxSize, this.queue.size());
+        assertEquals(firstPeekedElement, this.queue.peek());
     }
 }
