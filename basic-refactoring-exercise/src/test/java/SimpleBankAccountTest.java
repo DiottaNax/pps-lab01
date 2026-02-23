@@ -26,28 +26,37 @@ class SimpleBankAccountTest {
 
     @Test
     void testDeposit() {
-        bankAccount.deposit(accountHolder.id(), 100);
-        assertEquals(100, bankAccount.getBalance());
+        final int depositAmount = 100;
+        bankAccount.deposit(accountHolder.id(), depositAmount);
+        assertEquals(depositAmount, bankAccount.getBalance());
     }
 
     @Test
     void testWrongDeposit() {
-        bankAccount.deposit(accountHolder.id(), 100);
-        bankAccount.deposit(2, 50);
-        assertEquals(100, bankAccount.getBalance());
+        final int otherAccountId = accountHolder.id() + 1;
+        final int depositAmount = 100;
+        final int depositAmountOnOtherAccount = 50;
+        bankAccount.deposit(accountHolder.id(), depositAmount);
+        bankAccount.deposit(otherAccountId, depositAmountOnOtherAccount);
+        assertEquals(depositAmount, bankAccount.getBalance());
     }
 
     @Test
     void testWithdraw() {
-        bankAccount.deposit(accountHolder.id(), 100);
-        bankAccount.withdraw(accountHolder.id(), 70);
-        assertEquals(30, bankAccount.getBalance());
+        final int depositAmount = 100;
+        final int withdrawAmount = 70;
+        bankAccount.deposit(accountHolder.id(), depositAmount);
+        bankAccount.withdraw(accountHolder.id(), withdrawAmount);
+        assertEquals(depositAmount - withdrawAmount, bankAccount.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
-        bankAccount.deposit(accountHolder.id(), 100);
-        bankAccount.withdraw(2, 70);
-        assertEquals(100, bankAccount.getBalance());
+        final int otherAccountId = accountHolder.id() + 1;
+        final int depositAmount = 100;
+        final int  otherAccountWithdrawAmount = 70;
+        bankAccount.deposit(accountHolder.id(), depositAmount);
+        bankAccount.withdraw(otherAccountId, otherAccountWithdrawAmount);
+        assertEquals(depositAmount, bankAccount.getBalance());
     }
 }
