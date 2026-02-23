@@ -9,13 +9,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * The test suite for testing the SimpleBankAccount implementation
  */
 class SimpleBankAccountTest {
+    private static final double WITHDRAW__FEE = 1;
 
     private AccountHolder accountHolder;
     private BankAccount bankAccount;
 
     @BeforeEach
     void beforeEach(){
-        accountHolder = new AccountHolder("Mario", "Rossi", 1);
+        accountHolder = new AccountHolder("Mario", "Rossi");
         bankAccount = new SimpleBankAccount(accountHolder, 0);
     }
 
