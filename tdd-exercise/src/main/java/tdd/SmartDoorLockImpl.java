@@ -1,11 +1,12 @@
 package tdd;
 
-public class SmartDoorLockImpl implements SmartDoorLock {
+import java.util.Optional;public class SmartDoorLockImpl implements SmartDoorLock {
     private boolean locked;
+    private Optional<Integer> pin = Optional.empty();
 
     @Override
-    public void setPin(int pin) {
-
+    public void setPin(final int pin) {
+        this.pin = Optional.of(pin);
     }
 
     @Override
@@ -15,9 +16,10 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public void lock() {
-        if(!locked) {
+        if(!this.pin.isPresent()) {
             throw new IllegalStateException("No pin was set before locking!");
         }
+        this.locked = true;
     }
 
     @Override
