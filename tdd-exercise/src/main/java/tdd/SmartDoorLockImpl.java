@@ -1,7 +1,7 @@
 package tdd;
 
 public class SmartDoorLockImpl implements SmartDoorLock {
-    private boolean locked = false;
+    private boolean locked;
 
     @Override
     public void setPin(int pin) {
@@ -15,7 +15,9 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public void lock() {
-
+        if(!locked) {
+            throw new IllegalStateException("No pin was set before locking!");
+        }
     }
 
     @Override
