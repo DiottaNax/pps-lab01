@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -66,6 +67,11 @@ class MinMaxStackImplTest {
         assertEquals(firstPeekedElement, this.stack.peek());
     }
 
+    @Test
+    public void shouldThrowErrorWhenGettingMinFromEmptyStack() {
+        assertThrows(NoSuchElementException.class, this.stack::getMin);
+    }
+    
     @Test
     public void shouldReturnMin() {
         final int numElements = 10;
