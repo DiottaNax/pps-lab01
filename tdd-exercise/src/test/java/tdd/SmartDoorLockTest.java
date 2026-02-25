@@ -43,6 +43,13 @@ public class SmartDoorLockTest {
     }
 
     @Test
+    public void shouldNotLockAfterSettingPin() {
+        final int pin = random.nextInt(EXCLUSIVE_PIN_BOUND);
+        this.doorLock.setPin(pin);
+        assertFalse(this.doorLock.isLocked());
+    }
+
+    @Test
     public void canBeLockedAfterSettingPin() {
         this.lockDoor();
         assertTrue(this.doorLock.isLocked());
