@@ -71,7 +71,7 @@ class MinMaxStackImplTest {
     public void shouldThrowErrorWhenGettingMinFromEmptyStack() {
         assertThrows(NoSuchElementException.class, this.stack::getMin);
     }
-    
+
     @Test
     public void shouldReturnMin() {
         final int numElements = 10;
@@ -99,6 +99,11 @@ class MinMaxStackImplTest {
         final var stackWithManyElements = new MinMaxStackImpl();
         this.addRandomElements(stackWithManyElements, manyElements);
         verifyBenchmarkIsSimilar(this.stack::getMin, stackWithManyElements::getMin, toleranceMillis);
+    }
+
+    @Test
+    public void shouldThrowErrorWhenGettingMaxFromEmptyStack() {
+        assertThrows(NoSuchElementException.class, this.stack::getMax);
     }
 
     @Test
