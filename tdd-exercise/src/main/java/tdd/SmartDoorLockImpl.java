@@ -5,6 +5,7 @@ import java.util.Optional;
 public class SmartDoorLockImpl implements SmartDoorLock {
     private boolean locked;
     private Optional<Integer> pin = Optional.empty();
+    private int failedAttempts = 0;
 
     @Override
     public void setPin(final int pin) {
@@ -15,6 +16,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     public void unlock(int pin) {
         if (this.locked) {
             this.locked = !(this.pin.get() == pin);
+            this.failedAttempts += this.locked ? 1 : 0;
         }
     }
 
@@ -38,12 +40,12 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public int getMaxAttempts() {
-        return 0;
+        return 1;
     }
 
     @Override
     public int getFailedAttempts() {
-        return 0;
+        return this.failedAttempts;
     }
 
     @Override

@@ -49,9 +49,16 @@ public class SmartDoorLockTest {
     }
 
     @Test
-    public void nothingHappensIfUnlockingADoorNotLocked() {
-        final int initialAttempts = this.doorLock.getFailedAttempts();
+    public void nothingShouldHappenIfUnlockingADoorNotLocked() {
         this.doorLock.unlock(random.nextInt());
-        assertEquals(initialAttempts, this.doorLock.getFailedAttempts());
+        assertEquals(0, this.doorLock.getFailedAttempts());
+    }
+
+    @Test
+    public void failedAttemptsShouldIncreaseWithWrongPin() {
+        final int pin = this.lockDoor();
+        final int wrongPin = pin + 1;
+        this.doorLock.unlock(wrongPin);
+        assertEquals(1, this.doorLock.getFailedAttempts());
     }
 }
