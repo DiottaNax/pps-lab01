@@ -69,11 +69,23 @@ public class SmartDoorLockTest {
         assertEquals(1, this.doorLock.getFailedAttempts());
     }
 
-    @Test
-    public void shouldBeBlockedWithTooManyFailedAttempts() {
+    private int blockDoor() {
         final int pin = this.lockDoor();
         final int wrongPin = pin + 1;
         IntStream.range(0, this.doorLock.getMaxAttempts()).forEach(i -> this.doorLock.unlock(wrongPin));
+        return pin;
+    }
+
+    @Test
+    public void shouldBeBlockedWithTooManyFailedAttempts() {
+        this.blockDoor();
         assertTrue(this.doorLock.isBlocked());
+    }
+
+    @Test
+    public void cannotBeUnlockedWhenBlocked() {
+        final int pin = this.blockDoor();
+        this.doorLock.unlock(pin);
+        assertTrue(this.doorLock.isLocked());
     }
 }
