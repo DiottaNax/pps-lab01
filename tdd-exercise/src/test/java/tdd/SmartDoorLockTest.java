@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -66,5 +67,13 @@ public class SmartDoorLockTest {
         final int wrongPin = pin + 1;
         this.doorLock.unlock(wrongPin);
         assertEquals(1, this.doorLock.getFailedAttempts());
+    }
+
+    @Test
+    public void shouldBeBlockedWithTooManyFailedAttempts() {
+        final int pin = this.lockDoor();
+        final int wrongPin = pin + 1;
+        IntStream.range(0, this.doorLock.getMaxAttempts()).forEach(i -> this.doorLock.unlock(wrongPin));
+        assertTrue(this.doorLock.isBlocked());
     }
 }

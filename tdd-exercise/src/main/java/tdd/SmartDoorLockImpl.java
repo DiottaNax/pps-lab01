@@ -40,7 +40,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public boolean isBlocked() {
-        return false;
+        return this.failedAttempts >= this.maxAttempts;
     }
 
     @Override
