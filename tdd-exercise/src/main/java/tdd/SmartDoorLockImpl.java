@@ -8,7 +8,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
     private Optional<Integer> pin = Optional.empty();
     private int failedAttempts = 0;
 
-    public SmartDoorLockImpl(int maxAttempts) {
+    public SmartDoorLockImpl(final int maxAttempts) {
         this.maxAttempts = maxAttempts;
     }
 
@@ -55,6 +55,8 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public void reset() {
-
+        this.pin = Optional.empty();
+        this.failedAttempts = 0;
+        this.locked = false;
     }
 }

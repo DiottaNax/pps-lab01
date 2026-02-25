@@ -88,4 +88,13 @@ public class SmartDoorLockTest {
         this.doorLock.unlock(pin);
         assertTrue(this.doorLock.isLocked());
     }
+
+    @Test
+    public void canResetToInitialState() {
+        this.blockDoor();
+        this.doorLock.reset();
+        assertFalse(this.doorLock.isLocked());
+        assertFalse(this.doorLock.isBlocked());
+        assertEquals(0, this.doorLock.getFailedAttempts());
+    }
 }
