@@ -3,9 +3,14 @@ package tdd;
 import java.util.Optional;
 
 public class SmartDoorLockImpl implements SmartDoorLock {
+    private final int maxAttempts;
     private boolean locked;
     private Optional<Integer> pin = Optional.empty();
     private int failedAttempts = 0;
+
+    public SmartDoorLockImpl(int maxAttempts) {
+        this.maxAttempts = maxAttempts;
+    }
 
     @Override
     public void setPin(final int pin) {
@@ -40,7 +45,7 @@ public class SmartDoorLockImpl implements SmartDoorLock {
 
     @Override
     public int getMaxAttempts() {
-        return 1;
+        return this.maxAttempts;
     }
 
     @Override

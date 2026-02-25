@@ -9,18 +9,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartDoorLockTest {
     private final static int EXCLUSIVE_PIN_BOUND = 10_000;
+    private final static int MAX_ATTEMPTS = 3;
 
     private final Random random = new Random();
     private SmartDoorLock doorLock;
 
     @BeforeEach
     void init() {
-        this.doorLock = new SmartDoorLockImpl();
+        this.doorLock = new SmartDoorLockImpl(MAX_ATTEMPTS);
     }
 
     @Test
     public void shouldBeInitiallyOpen() {
         assertFalse(this.doorLock.isLocked());
+    }
+
+    @Test
+    public void shouldHaveMaxAttemptsSet() {
+        assertEquals(MAX_ATTEMPTS, this.doorLock.getMaxAttempts());
     }
 
     @Test
