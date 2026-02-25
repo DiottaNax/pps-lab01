@@ -28,10 +28,23 @@ public class SmartDoorLockTest {
         assertThrows(IllegalStateException.class, this.doorLock::lock);
     }
 
+    private int lockDoor() {
+        final int pin = random.nextInt(EXCLUSIVE_PIN_BOUND);
+        this.doorLock.setPin(pin);
+        this.doorLock.lock();
+        return pin;
+    }
+
     @Test
     public void canBeLockedAfterSettingPin() {
-        this.doorLock.setPin(random.nextInt(EXCLUSIVE_PIN_BOUND));
-        this.doorLock.lock();
+        this.lockDoor();
         assertTrue(this.doorLock.isLocked());
+    }
+
+    @Test
+    public void canBeUnLocked() {
+        final int pin = this.lockDoor();
+        this.doorLock.unlock(pin);
+        assertFalse(this.doorLock.isLocked());
     }
 }
