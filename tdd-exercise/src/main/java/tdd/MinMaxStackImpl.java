@@ -14,7 +14,7 @@ public class MinMaxStackImpl implements MinMaxStack {
     }
 
     @Override
-    public void push(int value) {
+    public void push(final int value) {
         this.stack.addLast(value);
         this.sortedElements.add(value);
         Collections.sort(this.sortedElements);

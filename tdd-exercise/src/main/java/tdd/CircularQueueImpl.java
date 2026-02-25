@@ -8,7 +8,7 @@ public class CircularQueueImpl implements CircularQueue {
     private final int maxSize;
     private final List<Integer> elements;
 
-    public CircularQueueImpl(int maxSize) {
+    public CircularQueueImpl(final int maxSize) {
         if (maxSize <= MIN_QUEUE_SIZE) {
             throw new IllegalArgumentException("Max size should be greater than 0!");
         }
@@ -22,8 +22,8 @@ public class CircularQueueImpl implements CircularQueue {
     }
 
     @Override
-    public void push(int element) {
-        if (this.size() == maxSize) {
+    public void push(final int element) {
+        if (this.size() == this.maxSize) {
             this.elements.removeFirst();
         }
         this.elements.addLast(element);
